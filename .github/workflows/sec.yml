@@ -15,5 +15,5 @@ jobs:
           VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
         run: |        
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-          ./veracode package --source /src --output . --trust --debug
+          ./veracode package --source src/ --output . --trust --debug
           ls -l
