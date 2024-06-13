@@ -3,56 +3,7 @@ on:
   push:
     branches: [dev]
 jobs:
-  auto-package-DevStore-WebApp-MVC:
-    name: auto package DevStore-WebApp-MVC
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-      - name: veracode CLI Download
-        env: 
-          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
-          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
-        run: | 
-          cd src/web/DevStore.WebApp.MVC       
-          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-          ./veracode package --source . --output . --trust
-          ls -l
-
-      - name: pipeline-scan DevStore-WebApp-MVC
-        id: pipeline-scan-DevStore-WebApp-MVC
-        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
-        with:
-          vid: ${{ secrets.VERACODE_ID }}
-          vkey: ${{ secrets.VERACODE_KEY }}
-          file: "src/web/DevStore.WebApp.MVC/veracode-auto-pack-DevStore.WebApp.MVC-dotnet.zip"
-          fail_build: "false"
-  
-  auto-package-DevStore-WebApp-Status:
-    name: auto package DevStore.WebApp.Status
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-      - name: veracode CLI Download
-        env: 
-          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
-          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
-        run: | 
-          cd src/web/DevStore.WebApp.Status      
-          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-          ./veracode package --source . --output . --trust
-          ls -l
-
-      - name: pipeline-scan DevStore-WebApp-Status
-        id: pipeline-scan-DevStore-WebApp-Status
-        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
-        with:
-          vid: ${{ secrets.VERACODE_ID }}
-          vkey: ${{ secrets.VERACODE_KEY }}
-          file: "src/web/DevStore.WebApp.Status/veracode-auto-pack-DevStore.WebApp.Status-dotnet.zip"
-          fail_build: "false"
-
+  # SERVICES BUILD AND SCAN
   auto-package-DevStore-Billing-API:
     name: auto package DevStore.Billing.API
     runs-on: ubuntu-latest
@@ -101,4 +52,231 @@ jobs:
           vid: ${{ secrets.VERACODE_ID }}
           vkey: ${{ secrets.VERACODE_KEY }}
           file: "src/services/DevStore.Billing.DevsPay/veracode-auto-pack-DevStore.Billing.DevsPay-dotnet.zip"
+          fail_build: "false"
+
+  auto-package-DevStore-Catalog-API:
+    name: auto package DevStore-Catalog-API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/services/DevStore.Catalog.API     
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
+
+      - name: pipeline-scan DevStore-Catalog-API
+        id: pipeline-scan-DevStore-Catalog-API
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/services/DevStore.Catalog.API/veracode-auto-pack-DevStore.Catalog.API-dotnet.zip"
+          fail_build: "false"
+
+  auto-package-DevStore-Customers-API:
+    name: auto package DevStore-Catalog-API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/services/DevStore.Customers.API    
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
+
+      - name: pipeline-scan DevStore-Catalog-API
+        id: pipeline-scan-DevStore-Catalog-API
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/services/DevStore.Catalog.API/veracode-auto-pack-DevStore.Customers.API-dotnet.zip"
+          fail_build: "false"
+
+  auto-package-DevStore-Identity-API:
+    name: auto package DevStore-Identity-API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/services/DevStore.Identity.API    
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
+
+      - name: pipeline-scan DevStore-Identity-API
+        id: pipeline-scan-DevStore-Identity-API
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/services/DevStore.Identity.API/veracode-auto-pack-DevStore.Identity.API-dotnet.zip"
+          fail_build: "false"
+
+  auto-package-DevStore-Orders-API:
+    name: auto package DevStore-Orders-API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/services/DevStore.Orders.API  
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
+
+      - name: pipeline-scan DevStore-Orders-API
+        id: pipeline-scan-DevStore-Orders-API
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/services/DevStore.Orders.API/veracode-auto-pack-DevStore.Orders.API-dotnet.zip"
+          fail_build: "false"
+
+  auto-package-DevStore-Orders-Domain:
+    name: auto package DevStore-Orders-Domain
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/services/DevStore.Orders.Domain 
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
+
+      - name: pipeline-scan DevStore-Orders-Domain
+        id: pipeline-scan-DevStore-Orders-Domain
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/services/DevStore.Orders.Domain/veracode-auto-pack-DevStore.Orders.Domain-dotnet.zip"
+          fail_build: "false"
+
+  auto-package-DevStore-Orders-Infra:
+    name: auto package DevStore-Orders-Infra
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/services/DevStore.Orders.Infra 
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
+
+      - name: pipeline-scan DevStore-Orders-Domain
+        id: pipeline-scan-DevStore-Orders-Domain
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/services/DevStore.Orders.Infra/veracode-auto-pack-DevStore.Orders.Infra-dotnet.zip"
+          fail_build: "false"
+
+  auto-package-DevStore-ShoppingCart-API:
+    name: auto package DevStore-ShoppingCart-API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/services/DevStore.ShoppingCart.API 
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
+
+      - name: pipeline-scan DevStore-Orders-Domain
+        id: pipeline-scan-DevStore-Orders-Domain
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/services/DevStore.ShoppingCart.API/veracode-auto-pack-DevStore.ShoppingCart.API-dotnet.zip"
+          fail_build: "false"
+  
+# WEB BUILD AND SCAN
+
+  auto-package-DevStore-WebApp-MVC:
+    name: auto package DevStore-WebApp-MVC
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/web/DevStore.WebApp.MVC       
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
+
+      - name: pipeline-scan DevStore-WebApp-MVC
+        id: pipeline-scan-DevStore-WebApp-MVC
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/web/DevStore.WebApp.MVC/veracode-auto-pack-DevStore.WebApp.MVC-dotnet.zip"
+          fail_build: "false"
+  
+  auto-package-DevStore-WebApp-Status:
+    name: auto package DevStore.WebApp.Status
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/web/DevStore.WebApp.Status      
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
+
+      - name: pipeline-scan DevStore-WebApp-Status
+        id: pipeline-scan-DevStore-WebApp-Status
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/web/DevStore.WebApp.Status/veracode-auto-pack-DevStore.WebApp.Status-dotnet.zip"
           fail_build: "false"
