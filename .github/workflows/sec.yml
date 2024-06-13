@@ -20,10 +20,20 @@ jobs:
           ./veracode package --source . --output . --trust
           ls -l
 
+      - name: pipeline-scan DevStore-Bff-Checkout
+        id: pipeline-scan-DevStore-Bff-Checkout
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/api-gateways/DevStore.Bff.Checkout/veracode-auto-pack-DevStore.Bff.Checkout-dotnet.zip"
+          fail_build: "false"
+
   # BUILDING BLOCKS BUILD AND SCAN
   auto-package-DevStore-Core:
     name: auto package DevStore-Core
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Bff-Checkout ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -37,9 +47,19 @@ jobs:
           ./veracode package --source . --output . --trust
           ls -l
 
+      - name: pipeline-scan DevStore-Core
+        id: pipeline-scan-DevStore-Core
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/building-blocks/DevStore.Core/veracode-auto-pack-DevStore.Core-dotnet.zip"
+          fail_build: "false"
+
   auto-package-DevStore-MessageBus:
     name: auto package DevStore-MessageBus
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Bff-Checkout ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -53,9 +73,19 @@ jobs:
           ./veracode package --source . --output . --trust
           ls -l
 
+      - name: pipeline-scan DevStore-MessageBus
+        id: pipeline-scan-DevStore-MessageBus
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/building-blocks/DevStore.MessageBus/veracode-auto-pack-DevStore.MessageBus-dotnet.zip"
+          fail_build: "false"
+
   auto-package-DevStore-WebAPI-Core:
     name: auto package DevStore-WebAPI-Core
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Bff-Checkout ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -69,10 +99,20 @@ jobs:
           ./veracode package --source . --output . --trust
           ls -l
 
+      - name: pipeline-scan DevStore-WebAPI-Core
+        id: pipeline-scan-DevStore-WebAPI-Core
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "src/building-blocks/DevStore.WebAPI.Core/veracode-auto-pack-DevStore.WebAPI.Core-dotnet.zip"
+          fail_build: "false"
+
   # SERVICES BUILD AND SCAN
   auto-package-DevStore-Billing-API:
     name: auto package DevStore.Billing.API
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Core, auto-package-DevStore-MessageBus, auto-package-DevStore-WebAPI-Core ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -98,6 +138,7 @@ jobs:
   auto-package-DevStore-Billing-DevsPay:
     name: auto package DevStore-Billing-DevsPay
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Core, auto-package-DevStore-MessageBus, auto-package-DevStore-WebAPI-Core ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -123,6 +164,7 @@ jobs:
   auto-package-DevStore-Catalog-API:
     name: auto package DevStore-Catalog-API
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Core, auto-package-DevStore-MessageBus, auto-package-DevStore-WebAPI-Core ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -142,12 +184,13 @@ jobs:
         with:
           vid: ${{ secrets.VERACODE_ID }}
           vkey: ${{ secrets.VERACODE_KEY }}
-          file: "src/services/DevStore.Catalog.API/veracode-auto-pack-DevStore.Catalog.API-dotnet.zip"
+          file: "src/services/DevStore.Customers.API/veracode-auto-pack-DevStore.Customers.API-dotnet.zip"
           fail_build: "false"
 
   auto-package-DevStore-Customers-API:
     name: auto package DevStore-Catalog-API
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Core, auto-package-DevStore-MessageBus, auto-package-DevStore-WebAPI-Core ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -173,6 +216,7 @@ jobs:
   auto-package-DevStore-Identity-API:
     name: auto package DevStore-Identity-API
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Core, auto-package-DevStore-MessageBus, auto-package-DevStore-WebAPI-Core ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -181,7 +225,7 @@ jobs:
           VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
           VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
         run: | 
-          cd src/services/DevStore.Identity.API    
+          cd src/services/DevStore.Identity.API
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
           ./veracode package --source . --output . --trust
           ls -l
@@ -198,6 +242,7 @@ jobs:
   auto-package-DevStore-Orders-API:
     name: auto package DevStore-Orders-API
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Core, auto-package-DevStore-MessageBus, auto-package-DevStore-WebAPI-Core ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -223,6 +268,7 @@ jobs:
   auto-package-DevStore-Orders-Domain:
     name: auto package DevStore-Orders-Domain
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Billing-API, auto-package-DevStore-Catalog-API, auto-package-DevStore-Customers-API, auto-package-DevStore-Identity-API ,auto-package-DevStore-Orders-API]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -248,6 +294,7 @@ jobs:
   auto-package-DevStore-Orders-Infra:
     name: auto package DevStore-Orders-Infra
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Billing-API, auto-package-DevStore-Catalog-API, auto-package-DevStore-Customers-API, auto-package-DevStore-Identity-API ,auto-package-DevStore-Orders-API]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -273,6 +320,7 @@ jobs:
   auto-package-DevStore-ShoppingCart-API:
     name: auto package DevStore-ShoppingCart-API
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Billing-API, auto-package-DevStore-Catalog-API, auto-package-DevStore-Customers-API, auto-package-DevStore-Identity-API ,auto-package-DevStore-Orders-API]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -299,6 +347,7 @@ jobs:
   auto-package-DevStore-WebApp-MVC:
     name: auto package DevStore-WebApp-MVC
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Orders-Domain, auto-package-DevStore-Orders-Domain, auto-package-DevStore-Orders-Infra, auto-package-DevStore-ShoppingCart-API ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -324,6 +373,7 @@ jobs:
   auto-package-DevStore-WebApp-Status:
     name: auto package DevStore.WebApp.Status
     runs-on: ubuntu-latest
+    needs: [ auto-package-DevStore-Orders-Domain, auto-package-DevStore-Orders-Domain, auto-package-DevStore-Orders-Infra, auto-package-DevStore-ShoppingCart-API ]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
