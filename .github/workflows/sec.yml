@@ -25,7 +25,7 @@ jobs:
         with:
           vid: ${{ secrets.VERACODE_ID }}
           vkey: ${{ secrets.VERACODE_KEY }}
-          file: "veracode-auto-pack-DevStore.WebApp.MVC-dotnet.zip"
+          file: "src/web/DevStore.WebApp.MVC/veracode-auto-pack-DevStore.WebApp.MVC-dotnet.zip"
           fail_build: "false"
   
   auto-package-DevStore-WebApp-Status:
@@ -50,7 +50,7 @@ jobs:
         with:
           vid: ${{ secrets.VERACODE_ID }}
           vkey: ${{ secrets.VERACODE_KEY }}
-          file: "veracode-auto-pack-DevStore.WebApp.Status-dotnet.zip"
+          file: "src/web/DevStore.WebApp.Status/veracode-auto-pack-DevStore.WebApp.Status-dotnet.zip"
           fail_build: "false"
 
   auto-package-DevStore-Billing-API:
@@ -75,7 +75,7 @@ jobs:
         with:
           vid: ${{ secrets.VERACODE_ID }}
           vkey: ${{ secrets.VERACODE_KEY }}
-          file: "veracode-auto-pack-DevStore.Billing.API-dotnet.zip"
+          file: "src/services/DevStore.Billing.API/veracode-auto-pack-DevStore.Billing.API-dotnet.zip"
           fail_build: "false"
 
   auto-package-DevStore-Billing-DevsPay:
@@ -100,5 +100,5 @@ jobs:
         with:
           vid: ${{ secrets.VERACODE_ID }}
           vkey: ${{ secrets.VERACODE_KEY }}
-          file: "vveracode-auto-pack-DevStore.Billing.DevsPay-dotnet.zip"
+          file: "src/services/DevStore.Billing.DevsPay/veracode-auto-pack-DevStore.Billing.DevsPay-dotnet.zip"
           fail_build: "false"
