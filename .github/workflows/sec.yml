@@ -19,14 +19,60 @@ jobs:
           ./veracode package --source . --output . --trust
           ls -l
 
-  build-DevStore-WebApp-MVC:
-    name: build DevStore-WebApp-MVC
+      - name: pipeline-scan DevStore-WebApp-MVC
+        id: pipeline-scan DevStore-WebApp-MVC
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
+        with:
+          vid: ${{ secrets.VERACODE_ID }}
+          vkey: ${{ secrets.VERACODE_KEY }}
+          file: "veracode-auto-pack-DevStore.WebApp.MVC-dotnet.zip veracode-auto-pack-DevStore.WebApp.MVC-dotnet-js.zip"
+          veracode_policy_name: "Veracode Recommended Medium"
+          fail_build: "true"
+  
+  auto-package-DevStore-WebApp-Status:
+    name: auto package DevStore.WebApp.Status
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-        
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '6.0'
-      - run: dotnet publish "DevStore.WebApp.MVC.csproj" -c RDebug -o /app/publish
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/web/DevStore.WebApp.Status      
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
+
+  auto-package-DevStore-Billing-API:
+    name: auto package DevStore.WebApp.Status
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/services/DevStore.Billing.API     
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
+
+  auto-package-DevStore-Billing-DevsPay:
+    name: auto package DevStore.WebApp.Status
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: veracode CLI Download
+        env: 
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
+        run: | 
+          cd src/services/DevStore.Billing.DevsPay     
+          curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+          ./veracode package --source . --output . --trust
+          ls -l
