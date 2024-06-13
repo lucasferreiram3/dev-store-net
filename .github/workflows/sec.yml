@@ -20,15 +20,6 @@ jobs:
           ./veracode package --source . --output . --trust
           ls -l
 
-      - name: pipeline-scan DevStore-Bff-Checkout
-        id: pipeline-scan-DevStore-Bff-Checkout
-        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
-        with:
-          vid: ${{ secrets.VERACODE_ID }}
-          vkey: ${{ secrets.VERACODE_KEY }}
-          file: "src/api-gateways/DevStore.Bff.Checkout/veracode-auto-pack-DevStore.Bff.Checkout-dotnet.zip"
-          fail_build: "false"
-
   # BUILDING BLOCKS BUILD AND SCAN
   auto-package-DevStore-Core:
     name: auto package DevStore-Core
@@ -46,15 +37,6 @@ jobs:
           ./veracode package --source . --output . --trust
           ls -l
 
-      - name: pipeline-scan DevStore-Core
-        id: pipeline-scan-DevStore-Core
-        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
-        with:
-          vid: ${{ secrets.VERACODE_ID }}
-          vkey: ${{ secrets.VERACODE_KEY }}
-          file: "src/building-blocks/DevStore.Core/veracode-auto-pack-DevStore.Core-dotnet.zip"
-          fail_build: "false"
-
   auto-package-DevStore-MessageBus:
     name: auto package DevStore-MessageBus
     runs-on: ubuntu-latest
@@ -71,15 +53,6 @@ jobs:
           ./veracode package --source . --output . --trust
           ls -l
 
-      - name: pipeline-scan DevStore-Billing-API
-        id: pipeline-scan-DevStore-Billing-API
-        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
-        with:
-          vid: ${{ secrets.VERACODE_ID }}
-          vkey: ${{ secrets.VERACODE_KEY }}
-          file: "src/building-blocks/DevStore.MessageBus/veracode-auto-pack-DevStore.MessageBus-dotnet.zip"
-          fail_build: "false"
-
   auto-package-DevStore-WebAPI-Core:
     name: auto package DevStore-WebAPI-Core
     runs-on: ubuntu-latest
@@ -95,15 +68,6 @@ jobs:
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
           ./veracode package --source . --output . --trust
           ls -l
-
-      - name: pipeline-scan DevStore-WebAPI-Core
-        id: pipeline-scan-DevStore-WebAPI-Core
-        uses: veracode/Veracode-pipeline-scan-action@v1.0.16
-        with:
-          vid: ${{ secrets.VERACODE_ID }}
-          vkey: ${{ secrets.VERACODE_KEY }}
-          file: "src/building-blocks/DevStore.WebAPI.Core/veracode-auto-pack-DevStore.WebAPI.Core-dotnet.zip"
-          fail_build: "false"
 
   # SERVICES BUILD AND SCAN
   auto-package-DevStore-Billing-API:
