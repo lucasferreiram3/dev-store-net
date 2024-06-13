@@ -26,7 +26,7 @@ jobs:
         with:
           vid: ${{ secrets.VERACODE_ID }}
           vkey: ${{ secrets.VERACODE_KEY }}
-          file: "src/api-gateways/DevStore.Bff.Checkout/veracode-auto-pack-src-DevStore.Bff.Checkout-dotnet.zip"
+          file: "src/api-gateways/DevStore.Bff.Checkout/veracode-auto-pack-DevStore.Bff.Checkout-dotnet.zip"
           fail_build: "false"
 
   # BUILDING BLOCKS BUILD AND SCAN
@@ -41,7 +41,7 @@ jobs:
           VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
           VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
         run: | 
-          cd src/building-block/DevStore.Core     
+          cd src/building-blocks/DevStore.Core     
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
           ./veracode package --source . --output . --trust
           ls -l
@@ -52,7 +52,7 @@ jobs:
         with:
           vid: ${{ secrets.VERACODE_ID }}
           vkey: ${{ secrets.VERACODE_KEY }}
-          file: "src/building-block/DevStore.Core/veracode-auto-pack-DevStore.Core-dotnet.zip"
+          file: "src/building-blocks/DevStore.Core/veracode-auto-pack-DevStore.Core-dotnet.zip"
           fail_build: "false"
 
   auto-package-DevStore-MessageBus:
@@ -66,7 +66,7 @@ jobs:
           VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
           VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
         run: | 
-          cd src/building-block/DevStore.MessageBus    
+          cd src/building-blocks/DevStore.MessageBus    
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
           ./veracode package --source . --output . --trust
           ls -l
@@ -77,7 +77,7 @@ jobs:
         with:
           vid: ${{ secrets.VERACODE_ID }}
           vkey: ${{ secrets.VERACODE_KEY }}
-          file: "src/building-block/DevStore.MessageBus/veracode-auto-pack-DevStore.MessageBus-dotnet.zip"
+          file: "src/building-blocks/DevStore.MessageBus/veracode-auto-pack-DevStore.MessageBus-dotnet.zip"
           fail_build: "false"
 
   auto-package-DevStore-WebAPI-Core:
@@ -91,7 +91,7 @@ jobs:
           VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
           VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
         run: | 
-          cd src/building-block/DevStore.WebAPI.Core    
+          cd src/building-blocks/DevStore.WebAPI.Core    
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
           ./veracode package --source . --output . --trust
           ls -l
@@ -102,7 +102,7 @@ jobs:
         with:
           vid: ${{ secrets.VERACODE_ID }}
           vkey: ${{ secrets.VERACODE_KEY }}
-          file: "src/building-block/DevStore.WebAPI.Core/veracode-auto-pack-DevStore.WebAPI.Core-dotnet.zip"
+          file: "src/building-blocks/DevStore.WebAPI.Core/veracode-auto-pack-DevStore.WebAPI.Core-dotnet.zip"
           fail_build: "false"
 
   # SERVICES BUILD AND SCAN
