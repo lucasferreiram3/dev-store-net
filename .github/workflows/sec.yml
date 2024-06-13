@@ -3,8 +3,8 @@ on:
   push:
     branches: [dev]
 jobs:
-  veracode-auto-package:
-    name: veracode auto-package
+  auto-package-DevStore-WebApp-MVC:
+    name: auto package DevStore-WebApp-MVC
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -13,7 +13,20 @@ jobs:
         env: 
           VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
           VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_KEY }}
-        run: |        
+        run: | 
+          cd src/web/DevStore.WebApp.MVC       
           curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-          ./veracode package --source src/web/DevStore.WebApp.MVC/ --output . --trust
+          ./veracode package --source . --output . --trust
           ls -l
+
+  build-DevStore-WebApp-MVC:
+    name: build DevStore-WebApp-MVC
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+        
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0'
+      - run: dotnet publish "DevStore.WebApp.MVC.csproj" -c RDebug -o /app/publish
