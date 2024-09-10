@@ -3,7 +3,7 @@ on:
   push:
     branches: [dev]
 jobs:
-  # API GATEWAYS BUILD AND SCAN
+  # API GATEWAYS BUILD AND SCAN.
   DevStore-Bff-Checkout:
     name: auto package DevStore-Bff-Checkout
     runs-on: ubuntu-latest
